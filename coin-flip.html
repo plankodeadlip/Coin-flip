@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Coin flip</title>
+    <style>
+      .coin-button{
+        background-color: yellow;
+        color: black;
+      }
+      .heads-button{
+        background-color: red;
+        color: green;
+      }
+      .tails-button{
+        background-color: cyan;
+        color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Coin</p>
+
+    <p>
+    <button title="Click it" class="coin-button" onclick="
+    if(balance > 0){
+      updateBet();
+    const coin = Math.random();
+    if (coin<= 0.5 && coin>=0){
+      result = 'heads';
+      alert('Heads');
+      headsCount++;
+      console.log(`Heads Count: ${headsCount} .`);
+
+    }else if ( coin > 0.5 && coin <= 1){
+      result = 'tails';
+      alert('Tails');
+      tailsCount++;
+      console.log(`Tails Count: ${tailsCount} . `);
+    }
+
+      updateBalance(bet);
+  }else{
+    alert('Hết tiền rồi chơi bời gì nữa');
+  }
+    ">Flip</button>
+    </p>
+    <button title="You chose heads" class="heads-button" onclick="
+    guess = 'heads';   
+    updateChoose();
+
+
+    ">Heads</button>
+    <button title="You chose tails" class="tails-button" onclick="
+    guess = 'tails';
+    updateChoose();
+
+
+    ">Tails</button>
+
+    <button onclick="
+      
+       score.winCount =0;
+       score.loseCount =0;
+      
+    ">Score reset</button>
+    <p class="js-move"></p>
+    <p class="js-bet"></p>
+    <p class="js-balance"></p>
+    <input placeholder="Enter your bet(Ít 5 quả trứng): " class="bet-enter" onkeyup="
+      console.log(event.key);
+    if(event.key === 'Enter'){
+      updateBet();
+      document.querySelector('.js-bet').innerHTML = `You bet: ${bet} `;
+    }
+    ">
+    <script>
+      let score= JSON.parse(localStorage.getItem('score'))||{
+        winCount:0,
+        loseCount:0
+      };
+      let headsCount = 0;
+      let tailsCount = 0;
+      let guess = '';
+      let bet = 0;
+
+      let result = '';
+      let bankInput = prompt("Enter your balance(Nhiều 1 tên lửa)): ");
+      let balance = parseInt(bankInput);
+
+
+
+      
+      function updateBet(){
+        let inputElement = document.querySelector('.bet-enter');
+       bet = Number(inputElement.value);
+      }
+
+      function updateBalance(bet){
+        if ( guess == result){
+        score.winCount++;
+        alert(`You Wins!. Wins:${score.winCount}. Lose:${score.loseCount}`);
+        console.log(`Wins! + ${bet}`);
+        balance+=bet;
+        document.querySelector('.js-balance').innerHTML = `Your balance: ${balance}K`;
+      }else{
+        score.loseCount++;
+        alert(`You Loses!. Wins:${score.winCount}. Lose:${score.loseCount}`);
+        console.log(`Loses!`);
+        console.log(`Loses! - ${bet}`);
+        balance-=bet;
+        document.querySelector('.js-balance').innerHTML = `Your balance: ${balance}K`;
+      }
+
+      }
+      function updateChoose(){
+        document.querySelector('.js-move').innerHTML = `You choose: ${guess}`;
+      }
+      
+      localStorage.setItem('score', JSON.stringify (score));
+
+    </script>
+  </body>
+</html>
